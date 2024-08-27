@@ -113,6 +113,7 @@ public class Locales {
     }
 
     /**
+     * Return a Set of String containing every loaded locales
      * @return Set of locale
      */
     public Set<String> getLocales() {
@@ -124,6 +125,7 @@ public class Locales {
     }
 
     /**
+     * Return the default locale
      * @return Default locale (en_us but can be changed)
      */
     public String getDefaultLocale() {
@@ -131,7 +133,7 @@ public class Locales {
     }
 
     /**
-     *
+     * Return a localized string
      * @param locale Locale (ie. en_us)
      * @param key Key (ie. plugin_name)
      * @return Localized Key
@@ -157,7 +159,7 @@ public class Locales {
     }
 
     /**
-     *
+     * Get a Set of String containing all path
      * @param locale Locale (ie. en_us)
      * @param deep Whether or not to get a deep list, as opposed to a shallow list.
      * @return Set of keys
