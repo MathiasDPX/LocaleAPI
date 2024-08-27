@@ -4,9 +4,16 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.*;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
  * Main class of LocaleAPI
@@ -17,6 +24,20 @@ public class Locales {
     private String default_locale = "en_us";
 
     private void init(JavaPlugin plugin){
+        try {
+            walkResources(plugin.getClass(), "/locales", 1, path -> {
+                String localeFileName = path.getFileName().toString();
+                if (!localeFileName.toLowerCase().endsWith(".yml")) return;
+
+                if (!Files.exists(plugin.getDataFolder().toPath().resolve("locales").resolve(localeFileName))) {
+                    plugin.saveResource("locales/" + localeFileName, false);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            plugin.getLogger().severe("Failed to load locales from resources");
+        }
+
         plugin.getDataFolder().mkdir();
         File folder = new File(plugin.getDataFolder(), "locales");
         folder.mkdir();
@@ -39,6 +60,26 @@ public class Locales {
 
             locales.put(filename, yaml);
             plugin.getLogger().info("Loaded locale "+filename);
+        }
+    }
+
+    private static void walkResources(Class<?> clazz, String path, int depth, Consumer<Path> consumer) throws URISyntaxException, IOException {
+        URI uri = clazz.getResource(path).toURI();
+        FileSystem fileSystem = null;
+        Path myPath;
+        try {
+            if (uri.getScheme().equals("jar")) {
+                fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
+                myPath = fileSystem.getPath(path);
+            }else {
+                myPath = Paths.get(uri);
+            }
+
+            try (Stream<Path> walker = Files.walk(myPath, depth)) {
+                walker.forEach(consumer);
+            }
+        }finally {
+            if (fileSystem != null) fileSystem.close();
         }
     }
 
