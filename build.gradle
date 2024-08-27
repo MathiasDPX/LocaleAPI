@@ -49,6 +49,11 @@ tasks.register('javadoc-jar', Jar) {
     description = 'Creates a Javadoc Jar'
 }
 
+tasks.register('sources-jar', Jar) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.allSource
+}
+
 processResources {
     def props = [version: version]
     inputs.properties props
