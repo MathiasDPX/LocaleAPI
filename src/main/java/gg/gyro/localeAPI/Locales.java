@@ -24,20 +24,6 @@ public class Locales {
     private String default_locale = "en_us";
 
     private void init(JavaPlugin plugin){
-        try {
-            walkResources(plugin.getClass(), "/locales", 1, path -> {
-                String localeFileName = path.getFileName().toString();
-                if (!localeFileName.toLowerCase().endsWith(".yml")) return;
-
-                if (!Files.exists(plugin.getDataFolder().toPath().resolve("locales").resolve(localeFileName))) {
-                    plugin.saveResource("locales/" + localeFileName, false);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            plugin.getLogger().severe("Failed to load locales from resources");
-        }
-
         plugin.getDataFolder().mkdir();
         File folder = new File(plugin.getDataFolder(), "locales");
         folder.mkdir();
@@ -63,26 +49,6 @@ public class Locales {
         }
     }
 
-    private static void walkResources(Class<?> clazz, String path, int depth, Consumer<Path> consumer) throws URISyntaxException, IOException {
-        URI uri = clazz.getResource(path).toURI();
-        FileSystem fileSystem = null;
-        Path myPath;
-        try {
-            if (uri.getScheme().equals("jar")) {
-                fileSystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
-                myPath = fileSystem.getPath(path);
-            }else {
-                myPath = Paths.get(uri);
-            }
-
-            try (Stream<Path> walker = Files.walk(myPath, depth)) {
-                walker.forEach(consumer);
-            }
-        }finally {
-            if (fileSystem != null) fileSystem.close();
-        }
-    }
-
     /**
      * Create a Locales Manager
      * @param plugin JavaPlugin
@@ -90,6 +56,17 @@ public class Locales {
     public Locales(JavaPlugin plugin) {
         this.plugin = plugin;
         init(this.plugin);
+    }
+
+    /**
+     * Save a locale from resources/locales to the DataFolder
+     * @param plugin JavaPlugin
+     * @param filename yml filename in resources/locales
+     * @see JavaPlugin#getDataFolder()
+     */
+    public static void saveDefaultConfig(JavaPlugin plugin, String filename) {
+        plugin.saveResource("locales/"+filename, false);
+        plugin.getLogger().info("Saved default locale "+filename);
     }
 
     /**
