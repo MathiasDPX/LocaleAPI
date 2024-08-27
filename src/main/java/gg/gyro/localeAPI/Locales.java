@@ -105,17 +105,6 @@ public class Locales {
     }
 
     /**
-     * Save a locale from resources/locales to the DataFolder
-     * @param plugin JavaPlugin
-     * @param filename yml filename in resources/locales
-     * @see JavaPlugin#getDataFolder()
-     */
-    public static void saveDefaultConfig(JavaPlugin plugin, String filename) {
-        plugin.saveResource("locales/"+filename, false);
-        plugin.getLogger().info("Saved default locale "+filename);
-    }
-
-    /**
      * Reload the locales
      * @param plugin JavaPlugin
      */
