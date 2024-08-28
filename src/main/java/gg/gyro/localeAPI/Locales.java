@@ -4,16 +4,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.*;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 /**
  * Main class of LocaleAPI
