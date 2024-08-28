@@ -6,7 +6,7 @@
 
 ```groovy
 maven {
-    name "mathiasRepo"
+    name "mathias-maven"
     url "https://mvn.coolcraft.ovh/releases"
 }
 
@@ -19,7 +19,7 @@ implementation "gg.gyro:LocaleAPI:[version]"
 
 ```kotlin
 maven {
-    name = "mathiasRepo"
+    name = "mathias-maven"
     url = uri("https://mvn.coolcraft.ovh/releases")
 }
 
@@ -32,7 +32,7 @@ implementation("gg.gyro:LocaleAPI:[version]")
 
 ```xml
 <repository>
-    <id>mathias-repo</id>
+    <id>mathias-maven</id>
     <name>Mathias's Maven Repository</name>
     <url>https://mvn.coolcraft.ovh/releases</url>
 </repository>
@@ -51,10 +51,10 @@ implementation("gg.gyro:LocaleAPI:[version]")
 
 # Example Usage
 ```yaml
-ourdatafolder/locales/fr_fr.yml
+ourdatafolder/locales/en_us.yml
 hello: "Hello World!"
 
-ourdatafolder/locales/en_us.yml
+ourdatafolder/locales/fr_fr.yml
 hello: "Bonjour le monde!"
 ```
 
@@ -82,6 +82,6 @@ public final class LocaleTestPlugin extends JavaPlugin {
 
 ### Output
 ```
-Hello World!
 Bonjour le monde!
+Hello World!
 ```
