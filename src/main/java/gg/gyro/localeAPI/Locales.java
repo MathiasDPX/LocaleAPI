@@ -52,17 +52,6 @@ public class Locales {
     }
 
     /**
-     * Save a locale from resources/locales to the DataFolder
-     * @param plugin JavaPlugin
-     * @param filename yml filename in resources/locales
-     * @see JavaPlugin#getDataFolder()
-     */
-    public static void saveDefaultConfig(JavaPlugin plugin, String filename) {
-        plugin.saveResource("locales/"+filename, false);
-        plugin.getLogger().info("Saved default locale "+filename);
-    }
-
-    /**
      * Create a Locales Manager
      * @param plugin JavaPlugin
      * @param default_locale Default locale (default: en_us)
@@ -72,6 +61,17 @@ public class Locales {
         this.default_locale = default_locale;
         plugin.getLogger().info("Use "+default_locale+" as default locale");
         init(this.plugin);
+    }
+
+    /**
+     * Save a locale from resources/locales to the DataFolder
+     * @param plugin JavaPlugin
+     * @param filename yml filename in resources/locales
+     * @see JavaPlugin#getDataFolder()
+     */
+    public static void saveDefaultConfig(JavaPlugin plugin, String filename) {
+        plugin.saveResource("locales/"+filename, false);
+        plugin.getLogger().info("Saved default locale "+filename);
     }
 
     /**
@@ -109,12 +109,11 @@ public class Locales {
      * @return Localized Key
      */
     public String get(String locale, String key) {
-        YamlConfiguration lang = Objects.requireNonNullElse(getLocale(locale), getLocale(default_locale));
         try {
+            YamlConfiguration lang = Objects.requireNonNullElse(getLocale(locale), getLocale(default_locale));
             return Objects.requireNonNullElse(lang.getString(key), "MISSING_PATH");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "MISSING_PATH";
+        } catch (NullPointerException e) {
+            throw new NullPointerException("Unable to find default locale ("+default_locale+")");
         }
     }
 
