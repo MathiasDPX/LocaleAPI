@@ -53,7 +53,7 @@ implementation("gg.gyro:LocaleAPI:[version]")
 
 - [Example Usage](#example-usage)
 - [Saving default locales](#create-default-locales)
-- [JavaDoc](https://mvn.coolcraft.ovh)
+- [JavaDoc](https://mvn.coolcraft.ovh/javadoc/releases/gg/gyro/LocaleAPI/latest)
 
 # Example Usage
 
