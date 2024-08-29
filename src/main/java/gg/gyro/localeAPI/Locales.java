@@ -52,7 +52,7 @@ public class Locales {
     }
 
     /**
-     * Create a Locales Manager
+     * Create a Locales Manager with a default locale
      * @param plugin JavaPlugin
      * @param default_locale Default locale (default: en_us)
      */
