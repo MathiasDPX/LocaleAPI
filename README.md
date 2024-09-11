@@ -1,6 +1,6 @@
 # LocaleAPI
 
-<img src="https://mvn.coolcraft.ovh/api/badge/latest/releases/gg/gyro/LocaleAPI?color=40c14a&name=Latest release&prefix=v">
+[<img src="https://mvn.coolcraft.ovh/api/badge/latest/releases/gg/gyro/LocaleAPI?color=40c14a&name=Latest release&prefix=v">](https://mvn.coolcraft.ovh/#/releases/gg/gyro/LocaleAPI/)
 
 <details>
 <summary>Groovy</summary>
@@ -52,16 +52,15 @@ implementation("gg.gyro:LocaleAPI:[version]")
 ## Summary
 
 - [Example Usage](#example-usage)
-- [Saving default locales](#create-default-locales)
 - [JavaDoc](https://mvn.coolcraft.ovh/javadoc/releases/gg/gyro/LocaleAPI/latest)
 
 # Example Usage
 
 ```yaml
-ourdatafolder/locales/en_us.yml
+datafolder/locales/en_us.yml
 hello: "Hello World!"
 
-ourdatafolder/locales/fr_fr.yml
+datafolder/locales/fr_fr.yml
 hello: "Bonjour le monde!"
 ```
 
@@ -77,6 +76,10 @@ public final class LocaleTestPlugin extends JavaPlugin {
     public void onEnable() {      
         // Creating our Locales Manager with the plugin in parameter
         Locales locales = new Locales(this);
+
+        // Saving locales to datafolder
+        Locales.saveDefaultConfig(this, "fr_fr.yml");
+        Locales.saveDefaultConfig(this, "en_us.yml");
       
         // Printing Hello World! in 2 languages
         System.out.println(locales.get("fr_fr", "hello"));
@@ -90,17 +93,4 @@ public final class LocaleTestPlugin extends JavaPlugin {
 ```
 Bonjour le monde!
 Hello World!
-```
-
-# Create default locales
-
-You may want to create default locale for your users, This is completly possible with LocaleAPI
-
-The function saveDefaultConfig() while save your locale file from resources/locales/xx_yy.yml to the plugin DataFolder, in one simple line of code
-- `this` is your plugin Main class
-- `en_us.yml` is the file you want to save
-```java
-saveDefaultConfig(this, "en_us.yml");
-
-// You need to run this BEFORE creating your Locales class
 ```
