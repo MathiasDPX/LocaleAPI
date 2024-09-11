@@ -1,9 +1,12 @@
 package gg.gyro.localeAPI;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
@@ -65,13 +68,60 @@ public class Locales {
 
     /**
      * Save a locale from resources/locales to the DataFolder
+     * Update the config if it is already saved
      * @param plugin JavaPlugin
      * @param filename yml filename in resources/locales
      * @see JavaPlugin#getDataFolder()
      */
     public static void saveDefaultConfig(JavaPlugin plugin, String filename) {
-        plugin.saveResource("locales/"+filename, false);
-        plugin.getLogger().info("Saved default locale "+filename);
+        File localeFile = new File(plugin.getDataFolder(), "locales/" + filename);
+
+        if (!localeFile.exists()) {
+            plugin.saveResource("locales/" + filename, false);
+            plugin.getLogger().info("Saved default locale " + filename);
+        } else {
+            FileConfiguration existingConfig = YamlConfiguration.loadConfiguration(localeFile);
+
+            InputStream defaultStream = plugin.getResource("locales/" + filename);
+            if (defaultStream != null) {
+                FileConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
+
+                boolean updated = mergeConfigs(existingConfig, defaultConfig);
+
+                if (updated) {
+                    try {
+                        existingConfig.save(localeFile);
+                        plugin.getLogger().info("Updated locale "+filename);
+                    } catch (Exception e) {
+                        plugin.getLogger().severe("Could not save the updated locale "+filename+": "+e.getMessage());
+                    }
+                }
+            } else {
+                plugin.getLogger().severe("Default locale "+filename+" not found in the plugin resources.");
+            }
+        }
+    }
+
+    /**
+     * Merges missing keys from the default config into the existing config
+     *
+     * @param existingConfig The existing configuration file
+     * @param defaultConfig  The default configuration loaded from the jar
+     * @return If any keys were added.
+     */
+    private static boolean mergeConfigs(FileConfiguration existingConfig, FileConfiguration defaultConfig) {
+        boolean updated = false;
+
+        Set<String> defaultKeys = defaultConfig.getKeys(true);
+
+        for (String key : defaultKeys) {
+            if (!existingConfig.contains(key)) {
+                existingConfig.set(key, defaultConfig.get(key));
+                updated = true;
+            }
+        }
+
+        return updated;
     }
 
     /**
