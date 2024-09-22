@@ -43,6 +43,10 @@ public class Locales {
             locales.put(filename, yaml);
             plugin.getLogger().info("Loaded locale "+filename);
         }
+
+        if (!locales.containsKey(default_locale)) {
+            throw new NullPointerException("Unable to find default locale ("+default_locale+")");
+        }
     }
 
     /**
