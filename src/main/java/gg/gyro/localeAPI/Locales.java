@@ -25,14 +25,8 @@ public class Locales {
         folder.mkdir();
         File[] files = folder.listFiles();
 
-        if (files == null) {
-            plugin.getLogger().warning("Minor error while loading locales!");
-            return;
-        }
-
         if (files.length == 0) {
-            plugin.getLogger().warning("No locales found!");
-            return;
+            throw new NullPointerException("No locales found!");
         }
 
         for (File file : files) {
