@@ -168,6 +168,20 @@ public class Locales {
     }
 
     /**
+     * Return a localized string with the default locale
+     * @param key Key (ie. plugin_name)
+     * @return Localized Key
+     */
+    public String get(String key) {
+        try {
+            YamlConfiguration lang = getLocale(default_locale);
+            return Objects.requireNonNullElse(lang.getString(key), "MISSING_PATH");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("Unable to find default locale ("+default_locale+")");
+        }
+    }
+
+    /**
      * Get a Set of String containing all keys in root
      * @param locale Locale (ie. en_us)
      * @return Set of root keys
