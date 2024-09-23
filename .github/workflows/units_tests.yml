@@ -1,4 +1,5 @@
 name: Build DEV Jars
+
 on: 
   pull_request:
     paths-ignore:
@@ -16,8 +17,9 @@ on:
       - 'CODE_OF_CONDUCT.md'
       - 'CONTRIBUTING.md'
       - 'README.md'
+
 jobs:
-    test:
+  test:
     name: Gradle Tests
     runs-on: ubuntu-latest
     if: |
@@ -59,13 +61,14 @@ jobs:
               ...context.repo,
               pull_number,
               body: "There is something wrong with test codes.",
-             event: "REQUEST_CHANGES"
+              event: "REQUEST_CHANGES"
             })
             await github.pulls.update({
               ...context.repo,
               pull_number,
               state: "closed"
             })
+
   build_dev_jars:
     name: Build DEV jars
     runs-on: ubuntu-latest
