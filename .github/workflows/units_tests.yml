@@ -19,56 +19,6 @@ on:
       - 'README.md'
 
 jobs:
-  test:
-    name: Gradle Tests
-    runs-on: ubuntu-latest
-    if: |
-      (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'STAGING')) ||
-      (github.event_name == 'push' && github.ref == 'refs/heads/main')
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: Setup JDK 1.8
-        uses: actions/setup-java@v2
-        with:
-          java-version: '8'
-          distribution: 'adopt'
-      - name: Grant Permissions to gradlew
-        run: chmod +x gradlew
-      - name: Test
-        run: ./gradlew test --tests "*Tests"
-      - name: Test Success
-        if: success() && github.event_name == 'pull_request'
-        uses: actions/github-script@0.2.0
-        with:
-          github-token: ${{ github.token }}
-          script: |
-            const pull_number = "${{github.event.number}}"
-            await github.pulls.createReview({
-              ...context.repo,
-              pull_number,
-              body: "All tests passed.",
-              event: "APPROVE"
-            })
-      - name: Test Fail
-        if: failure() && github.event_name == 'pull_request'
-        uses: actions/github-script@0.2.0
-        with:
-          github-token: ${{ github.token }}
-          script: |
-            const pull_number = "${{github.event.number}}"
-            await github.pulls.createReview({
-              ...context.repo,
-              pull_number,
-              body: "There is something wrong with test codes.",
-              event: "REQUEST_CHANGES"
-            })
-            await github.pulls.update({
-              ...context.repo,
-              pull_number,
-              state: "closed"
-            })
-
   build_dev_jars:
     name: Build DEV jars
     runs-on: ubuntu-latest
@@ -90,3 +40,6 @@ jobs:
           echo "git_hash=$git_hash" >> $GITHUB_ENV
           echo "snapshotVersion=5.5-SNAPSHOT" >> $GITHUB_ENV
           echo "artifactPath=$(pwd)/builds" >> $GITHUB_ENV
+      - name: Tests
+        run: |
+          ./gradlew ./gradlew test --tests "*Tests"
