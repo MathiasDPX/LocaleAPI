@@ -40,6 +40,6 @@ jobs:
           echo "git_hash=$git_hash" >> $GITHUB_ENV
           echo "snapshotVersion=5.5-SNAPSHOT" >> $GITHUB_ENV
           echo "artifactPath=$(pwd)/builds" >> $GITHUB_ENV
-      - name: Tests
+      - name: Run units tests
         run: |
           ./gradlew test --tests "*Tests"
