@@ -51,9 +51,9 @@ tasks.register('publish') {
     dependsOn 'jar'
     dependsOn 'javadoc-jar'
     dependsOn 'sources-jar'
-    tasks.findByName("jar").mustRunAfter("clean")
-    tasks.findByName("javadoc-jar").mustRunAfter("clean")
-    tasks.findByName("sources-jar").mustRunAfter("clean")
+    tasks.named("jar").mustRunAfter("clean")
+    tasks.named("javadoc-jar").mustRunAfter("clean")
+    tasks.named("sources-jar").mustRunAfter("clean")
     group = 'build setup'
     description = 'Builds the plugin jar, javadoc jar, and sources jar'
 }

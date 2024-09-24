@@ -15,11 +15,22 @@ import java.util.Set;
  * Main class of LocaleAPI
  */
 public class Locales {
+    private static Locales instance;
+
     private final HashMap<String, YamlConfiguration> locales = new HashMap<>();
     private final JavaPlugin plugin;
     private String default_locale = "en_us";
 
+    /**
+     * Get the instance of Locales
+     * @return Locales instance
+     */
+    public static Locales getInstance() {
+        return instance;
+    }
+
     private void init(JavaPlugin plugin){
+        instance = this;
         plugin.getDataFolder().mkdir();
         File folder = new File(plugin.getDataFolder(), "locales");
         folder.mkdir();

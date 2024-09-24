@@ -91,4 +91,18 @@ public class CreationTests {
 
         Assertions.assertEquals(1, keys.size());
     }
+
+    @Test
+    @DisplayName("Access invalid singelton")
+    void access_invalid_singleton() {
+        Assertions.assertNull(Locales.getInstance());
+    }
+
+    @Test
+    @DisplayName("Access singelton")
+    void access_singleton() {
+        Locales.saveDefaultConfig(plugin, "en_us.yml");
+        new Locales(plugin);
+        Assertions.assertSame(Locales.getInstance().getClass(), Locales.class);
+    }
 }
