@@ -73,13 +73,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class LocaleTestPlugin extends JavaPlugin {
 
     @Override
-    public void onEnable() {      
-        // Creating our Locales Manager with the plugin in parameter
-        Locales locales = new Locales(this);
-
+    public void onEnable() {
         // Saving locales to datafolder
         Locales.saveDefaultConfig(this, "fr_fr.yml");
         Locales.saveDefaultConfig(this, "en_us.yml");
+        
+        // Creating our Locales Manager with the plugin in parameter
+        Locales locales = new Locales(this);
       
         // Printing Hello World! in 2 languages
         System.out.println(locales.get("fr_fr", "hello"));
