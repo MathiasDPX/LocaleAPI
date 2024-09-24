@@ -46,18 +46,6 @@ tasks.withType(JavaCompile).configureEach {
     }
 }
 
-tasks.register('publish') {
-    dependsOn 'clean'
-    dependsOn 'jar'
-    dependsOn 'javadoc-jar'
-    dependsOn 'sources-jar'
-    tasks.named("jar").mustRunAfter("clean")
-    tasks.named("javadoc-jar").mustRunAfter("clean")
-    tasks.named("sources-jar").mustRunAfter("clean")
-    group = 'build setup'
-    description = 'Builds the plugin jar, javadoc jar, and sources jar'
-}
-
 tasks.register('javadoc-jar', Jar) {
     group = 'documentation'
     dependsOn javadoc
