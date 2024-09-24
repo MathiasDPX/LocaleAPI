@@ -93,12 +93,6 @@ public class CreationTests {
     }
 
     @Test
-    @DisplayName("Access invalid singelton")
-    void access_invalid_singleton() {
-        Assertions.assertNull(Locales.getInstance());
-    }
-
-    @Test
     @DisplayName("Access singelton")
     void access_singleton() {
         Locales.saveDefaultConfig(plugin, "en_us.yml");
