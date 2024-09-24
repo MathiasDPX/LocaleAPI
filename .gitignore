@@ -1,6 +1,7 @@
 .gradle/
 .idea/
 build/
+builds/
 
 # mac files
 .DS_Store

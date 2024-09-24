@@ -47,6 +47,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.register('javadoc-jar', Jar) {
+    destinationDirectory.set(file("./builds/"))
     group = 'documentation'
     dependsOn javadoc
     from(file("${buildDir}/docs/javadoc")) {
@@ -57,8 +58,21 @@ tasks.register('javadoc-jar', Jar) {
 }
 
 tasks.register('sources-jar', Jar) {
+    destinationDirectory.set(file("./builds/"))
     archiveClassifier.set('sources')
+    group = "documentation"
     from sourceSets.main.allSource
+}
+
+jar {
+    destinationDirectory.set(file("./builds/"))
+}
+
+tasks.register('publish') {
+    dependsOn "clean", "jar", "javadoc-jar", "sources-jar"
+
+    group = 'build setup'
+    description = 'Builds the plugin jar, javadoc jar, and sources jar'
 }
 
 processResources {
