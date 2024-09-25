@@ -3,7 +3,7 @@
 [<img src="https://mvn.coolcraft.ovh/api/badge/latest/releases/gg/gyro/LocaleAPI?color=40c14a&name=Latest release&prefix=v">](https://mvn.coolcraft.ovh/#/releases/gg/gyro/LocaleAPI/)
 
 > [!NOTE]
-> For using the very last version: Change `releases` to `snapshots` in url and set version to `snapshot`
+> For using the very last version: Use version `snapshot`
 
 <details>
 <summary>Groovy</summary>
