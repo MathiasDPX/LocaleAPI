@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'gg.gyro'
@@ -46,33 +47,67 @@ tasks.withType(JavaCompile).configureEach {
     }
 }
 
-tasks.register('javadoc-jar', Jar) {
+jar {
+    destinationDirectory.set(file("./builds/"))
+}
+
+tasks.register('javadocJar', Jar) {
     destinationDirectory.set(file("./builds/"))
     group = 'documentation'
     dependsOn javadoc
     from(file("${buildDir}/docs/javadoc")) {
         into('/')
     }
-    archiveFileName.set("${project.name}-${project.version}-javadoc.jar")
+    archiveClassifier.set('javadoc')
     description = 'Creates a Javadoc Jar'
 }
 
-tasks.register('sources-jar', Jar) {
+tasks.register('sourcesJar', Jar) {
+
     destinationDirectory.set(file("./builds/"))
     archiveClassifier.set('sources')
     group = "documentation"
     from sourceSets.main.allSource
 }
 
-jar {
-    destinationDirectory.set(file("./builds/"))
+clean.doFirst {
+    delete "${rootDir}/builds"
 }
 
-tasks.register('publish') {
-    dependsOn "clean", "jar", "javadoc-jar", "sources-jar"
+tasks.register('final-jar') {
+    dependsOn "clean", "jar", "javadocJar", "sourcesJar"
 
     group = 'build setup'
     description = 'Builds the plugin jar, javadoc jar, and sources jar'
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri('https://mvn.coolcraft.ovh/releases')
+            credentials {
+                username = System.getenv("MAVEN_USERNAME") ?: project.findProperty("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD") ?: project.findProperty("MAVEN_PASSWORD")
+            }
+        }
+    }
+
+    publications {
+        mavenJar(MavenPublication) {
+            from components.java
+            artifact(javadocJar) {
+                classifier "javadoc"
+            }
+
+            artifact(sourcesJar) {
+                classifier "sources"
+            }
+
+            artifactId = 'LocaleAPI'
+            groupId = 'gg.gyro'
+            version = 'snapshot'
+        }
+    }
 }
 
 processResources {
