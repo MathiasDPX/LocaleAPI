@@ -43,3 +43,6 @@ jobs:
       - name: Run units tests
         run: |
           ./gradlew test --tests "*Tests"
+      - name: Publishing to Maven Repository
+        run: |
+          ./gradlew publish
