@@ -46,3 +46,6 @@ jobs:
       - name: Publishing to Maven Repository
         run: |
           ./gradlew publish
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_NAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_SECRET }}
