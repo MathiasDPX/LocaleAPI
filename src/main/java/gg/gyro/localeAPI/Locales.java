@@ -30,6 +30,26 @@ public class Locales {
     }
 
     private void init(JavaPlugin plugin){
+    }
+
+    /**
+     * Create a Locales Manager
+     * @param plugin JavaPlugin
+     */
+    public Locales(JavaPlugin plugin) {
+        this(plugin, "en_us");
+    }
+
+    /**
+     * Create a Locales Manager with a default locale
+     * @param plugin JavaPlugin
+     * @param default_locale Default locale (default: en_us)
+     */
+    public Locales(JavaPlugin plugin, String default_locale) {
+        plugin.getLogger().info("Use "+default_locale+" as default locale");
+        this.plugin = plugin;
+        this.default_locale = default_locale;
+
         instance = this;
         plugin.getDataFolder().mkdir();
         File folder = new File(plugin.getDataFolder(), "locales");
@@ -52,27 +72,6 @@ public class Locales {
         if (!locales.containsKey(default_locale)) {
             throw new NullPointerException("Unable to find default locale ("+default_locale+")");
         }
-    }
-
-    /**
-     * Create a Locales Manager
-     * @param plugin JavaPlugin
-     */
-    public Locales(JavaPlugin plugin) {
-        this.plugin = plugin;
-        init(this.plugin);
-    }
-
-    /**
-     * Create a Locales Manager with a default locale
-     * @param plugin JavaPlugin
-     * @param default_locale Default locale (default: en_us)
-     */
-    public Locales(JavaPlugin plugin, String default_locale) {
-        this.plugin = plugin;
-        this.default_locale = default_locale;
-        plugin.getLogger().info("Use "+default_locale+" as default locale");
-        init(this.plugin);
     }
 
     /**
