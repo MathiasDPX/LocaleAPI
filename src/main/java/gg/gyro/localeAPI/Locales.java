@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -65,8 +66,13 @@ public class Locales {
             filename = filename.contains(".") ? filename.substring(0, filename.lastIndexOf('.')) : filename;
             YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
 
-            locales.put(filename, yaml);
-            plugin.getLogger().info("Loaded locale "+filename);
+            List<String> mirrorfor = yaml.getStringList("mirror-for");
+            mirrorfor.add(filename);
+
+            for (String lang : mirrorfor) {
+                locales.put(lang, yaml);
+                plugin.getLogger().info("Loaded locale " + lang);
+            }
         }
 
         if (!locales.containsKey(default_locale)) {

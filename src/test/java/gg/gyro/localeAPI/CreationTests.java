@@ -99,4 +99,30 @@ public class CreationTests {
         new Locales(plugin);
         Assertions.assertSame(Locales.getInstance().getClass(), Locales.class);
     }
+
+    @Test
+    @DisplayName("Create mirror locale")
+    void createMirrorLocale() {
+        Assertions.assertDoesNotThrow(() -> {
+            Locales.saveDefaultConfig(plugin, "de_de.yml");
+            new Locales(plugin, "de_de");
+        });
+    }
+
+    @Test
+    @DisplayName("List locales (with mirrors)")
+    void listLocalesWithMirrors() {
+        Locales.saveDefaultConfig(plugin, "de_de.yml");
+        Locales locales = new Locales(plugin, "de_de");
+        Assertions.assertEquals(Set.of("de_de", "de_at", "de_ch"), locales.getLocales());
+    }
+
+    @Test
+    @DisplayName("Create Locales instance with mirror as default")
+    void createLocalesWithMirrorAsDefault() {
+        Assertions.assertDoesNotThrow(() -> {
+            Locales.saveDefaultConfig(plugin, "de_de.yml");
+            new Locales(plugin, "de_at");
+        });
+    }
 }

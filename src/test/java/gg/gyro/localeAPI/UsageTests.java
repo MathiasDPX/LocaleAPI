@@ -67,4 +67,24 @@ public class UsageTests {
 
         Assertions.assertEquals("Bonjour le monde!", localized);
     }
+
+    @Test
+    @DisplayName("Getting a localized key with a locale that have mirror")
+    void getLocalizedKeyWithLocaleThatHaveMirror() {
+        Assertions.assertDoesNotThrow(() -> {
+            Locales.saveDefaultConfig(plugin, "de_de.yml");
+            Locales locales = new Locales(plugin, "de_de");
+            Assertions.assertEquals(locales.get("de_de", "hello"), "Hallo Welt!");
+        });
+    }
+
+    @Test
+    @DisplayName("Getting a localized key with a mirror")
+    void getLocalizedKeyWithMirror() {
+        Assertions.assertDoesNotThrow(() -> {
+            Locales.saveDefaultConfig(plugin, "de_de.yml");
+            Locales locales = new Locales(plugin, "de_de");
+            Assertions.assertEquals(locales.get("de_at", "hello"), "Hallo Welt!");
+        });
+    }
 }
