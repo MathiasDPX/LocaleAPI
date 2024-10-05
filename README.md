@@ -6,21 +6,7 @@
 > For using the very last version: Use version `snapshot`
 
 <details>
-<summary>Groovy</summary>
-
-```groovy
-maven {
-    name "mathias-maven"
-    url "https://mvn.coolcraft.ovh/releases"
-}
-
-implementation "gg.gyro:LocaleAPI:[version]"
-```
-
-</details>
-
-<details>
-<summary>Kotlin</summary>
+<summary>Gradle</summary>
 
 ```kotlin
 maven {
@@ -54,7 +40,8 @@ implementation("gg.gyro:LocaleAPI:[version]")
 
 ## Summary
 
-- [Example Usage](#example-usage)
+- [Example usage](#example-usage)
+- [Example plugin](https://github.com/MathiasDPX/LocaleAPI/tree/plugin)
 - [JavaDoc](https://mvn.coolcraft.ovh/javadoc/releases/gg/gyro/LocaleAPI/latest)
 
 # Example Usage
