@@ -1,0 +1,5 @@
+name: ExamplePlugin
+version: '1.0.0'
+main: gg.gyro.example.ExamplePlugin
+api-version: '1.18'
+description: Example Plugin for LocaleAPI
