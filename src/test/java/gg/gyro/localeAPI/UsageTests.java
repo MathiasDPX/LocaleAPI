@@ -87,4 +87,20 @@ public class UsageTests {
             Assertions.assertEquals(locales.get("de_at", "hello"), "Hallo Welt!");
         });
     }
+
+    @Test
+    @DisplayName("Verify default_locale")
+    void verifyDefaultLocale() {
+        Locales.saveDefaultConfig(plugin, "en_us.yml");
+        Locales locales = new Locales(plugin);
+        Assertions.assertEquals(locales.getDefaultLocale(), "en_us");
+    }
+
+    @Test
+    @DisplayName("Verify default_locale (differant than default)")
+    void verifyDifferentDefaultLocale() {
+        Locales.saveDefaultConfig(plugin, "fr_fr.yml");
+        Locales locales = new Locales(plugin, "fr_fr");
+        Assertions.assertEquals(locales.getDefaultLocale(), "fr_fr");
+    }
 }
