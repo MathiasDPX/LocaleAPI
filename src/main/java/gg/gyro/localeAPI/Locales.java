@@ -19,8 +19,7 @@ public class Locales {
     private static Locales instance;
 
     private final HashMap<String, YamlConfiguration> locales = new HashMap<>();
-    private final JavaPlugin plugin;
-    private String default_locale = "en_us";
+    private final String default_locale;
 
     /**
      * Get the instance of Locales
@@ -28,9 +27,6 @@ public class Locales {
      */
     public static Locales getInstance() {
         return instance;
-    }
-
-    private void init(JavaPlugin plugin){
     }
 
     /**
@@ -48,7 +44,6 @@ public class Locales {
      */
     public Locales(JavaPlugin plugin, String default_locale) {
         plugin.getLogger().info("Use "+default_locale+" as default locale");
-        this.plugin = plugin;
         this.default_locale = default_locale;
 
         instance = this;
@@ -139,14 +134,6 @@ public class Locales {
     }
 
     /**
-     * Reload the locales
-     * @param plugin JavaPlugin
-     */
-    public void reloadLocales(JavaPlugin plugin) {
-        init(this.plugin);
-    }
-
-    /**
      * Return a Set of String containing every loaded locales
      * @return Set of locale
      */
@@ -208,7 +195,7 @@ public class Locales {
     /**
      * Get a Set of String containing all path
      * @param locale Locale (ie. en_us)
-     * @param deep Whether or not to get a deep list, as opposed to a shallow list.
+     * @param deep Whether to get a deep list, as opposed to a shallow list.
      * @return Set of keys
      */
     public Set<String> getKeys(String locale, boolean deep) {
