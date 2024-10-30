@@ -84,7 +84,7 @@ tasks.register('final-jar') {
 publishing {
     repositories {
         maven {
-            url = uri('https://mvn.coolcraft.ovh/releases')
+            url = uri('https://mvn.mathiasd.fr/releases')
             credentials {
                 username = System.getenv("MAVEN_USERNAME") ?: project.findProperty("MAVEN_USERNAME")
                 password = System.getenv("MAVEN_PASSWORD") ?: project.findProperty("MAVEN_PASSWORD")
