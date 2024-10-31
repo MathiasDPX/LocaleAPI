@@ -1,6 +1,6 @@
 # LocaleAPI
 
-[<img src="https://mvn.coolcraft.ovh/api/badge/latest/releases/gg/gyro/LocaleAPI?color=40c14a&name=Latest release&prefix=v">](https://mvn.coolcraft.ovh/#/releases/gg/gyro/LocaleAPI/)
+[<img src="https://mvn.mathiasd.fr/api/badge/latest/releases/gg/gyro/LocaleAPI?color=40c14a&name=Latest release&prefix=v">](https://mvn.mathiasd.fr/#/releases/gg/gyro/LocaleAPI/)
 
 > [!NOTE]
 > For using the very last version: Use version `snapshot`
@@ -11,7 +11,7 @@
 ```kotlin
 maven {
     name = "mathias-maven"
-    url = uri("https://mvn.coolcraft.ovh/releases")
+    url = uri("https://mvn.mathiasd.fr/releases")
 }
 
 implementation("gg.gyro:LocaleAPI:[version]")
@@ -26,7 +26,7 @@ implementation("gg.gyro:LocaleAPI:[version]")
 <repository>
     <id>mathias-maven</id>
     <name>Mathias's Maven Repository</name>
-    <url>https://mvn.coolcraft.ovh/releases</url>
+    <url>https://mvn.mathiasd.fr/releases</url>
 </repository>
 
 <dependency>
@@ -42,7 +42,7 @@ implementation("gg.gyro:LocaleAPI:[version]")
 
 - [Example usage](#example-usage)
 - [Example plugin](https://github.com/MathiasDPX/LocaleAPI/tree/plugin)
-- [JavaDoc](https://mvn.coolcraft.ovh/javadoc/releases/gg/gyro/LocaleAPI/latest)
+- [JavaDoc](https://mvn.mathiasd.fr/javadoc/releases/gg/gyro/LocaleAPI/latest)
 
 # Example Usage
 
