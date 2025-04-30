@@ -1,3 +1,0 @@
-name: LocalesTestPlugin
-main: gg.gyro.localeAPI.LocalesPlugin
-version: 1.0
