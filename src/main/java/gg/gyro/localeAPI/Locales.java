@@ -16,25 +16,15 @@ import java.util.Set;
  * Main class of LocaleAPI
  */
 public class Locales {
-    private static Locales instance;
-
-    private final HashMap<String, YamlConfiguration> locales = new HashMap<>();
-    private final String default_locale;
-
-    /**
-     * Get the instance of Locales
-     * @return Locales instance
-     */
-    public static Locales getInstance() {
-        return instance;
-    }
+    private static final HashMap<String, YamlConfiguration> locales = new HashMap<>();
+    private static String default_locale = "";
 
     /**
      * Create a Locales Manager
      * @param plugin JavaPlugin
      */
-    public Locales(JavaPlugin plugin) {
-        this(plugin, "en_us");
+    public static void initialize(JavaPlugin plugin) {
+        initialize(plugin, "en_us");
     }
 
     /**
@@ -42,11 +32,10 @@ public class Locales {
      * @param plugin JavaPlugin
      * @param default_locale Default locale (default: en_us)
      */
-    public Locales(JavaPlugin plugin, String default_locale) {
+    public static void initialize(JavaPlugin plugin, String default_locale) {
         plugin.getLogger().info("Use "+default_locale+" as default locale");
-        this.default_locale = default_locale;
+        Locales.default_locale = default_locale;
 
-        instance = this;
         plugin.getDataFolder().mkdir();
         File folder = new File(plugin.getDataFolder(), "locales");
         folder.mkdir();
@@ -137,11 +126,11 @@ public class Locales {
      * Return a Set of String containing every loaded locales
      * @return Set of locale
      */
-    public Set<String> getLocales() {
+    public static Set<String> getLocales() {
         return locales.keySet();
     }
 
-    private YamlConfiguration getLocale(String locale) {
+    private static YamlConfiguration getLocale(String locale) {
         return locales.get(locale);
     }
 
@@ -149,7 +138,7 @@ public class Locales {
      * Return the default locale
      * @return Default locale (en_us but can be changed)
      */
-    public String getDefaultLocale() {
+    public static String getDefaultLocale() {
         return default_locale;
     }
 
@@ -159,7 +148,7 @@ public class Locales {
      * @param key Key (ie. plugin_name)
      * @return Localized Key
      */
-    public String get(String locale, String key) {
+    public static String get(String locale, String key) {
         try {
             YamlConfiguration lang = Objects.requireNonNullElse(getLocale(locale), getLocale(default_locale));
             return Objects.requireNonNullElse(lang.getString(key), "MISSING_PATH");
@@ -173,7 +162,7 @@ public class Locales {
      * @param key Key (ie. plugin_name)
      * @return Localized Key
      */
-    public String get(String key) {
+    public static String get(String key) {
         try {
             YamlConfiguration lang = getLocale(default_locale);
             return Objects.requireNonNullElse(lang.getString(key), "MISSING_PATH");
@@ -187,7 +176,7 @@ public class Locales {
      * @param locale Locale (ie. en_us)
      * @return Set of root keys
      */
-    public Set<String> getKeys(String locale) {
+    public static Set<String> getKeys(String locale) {
         YamlConfiguration lang = Objects.requireNonNullElse(getLocale(locale), getLocale(default_locale));
         return lang.getKeys(false);
     }
@@ -198,7 +187,7 @@ public class Locales {
      * @param deep Whether to get a deep list, as opposed to a shallow list.
      * @return Set of keys
      */
-    public Set<String> getKeys(String locale, boolean deep) {
+    public static Set<String> getKeys(String locale, boolean deep) {
         YamlConfiguration lang = Objects.requireNonNullElse(getLocale(locale), getLocale(default_locale));
         return lang.getKeys(deep);
     }

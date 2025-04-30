@@ -21,8 +21,8 @@ public class UsageTests {
     @DisplayName("Getting a localized key")
     void getLocalizedKey() {
         Locales.saveDefaultConfig(plugin, "en_us.yml");
-        Locales locales = new Locales(plugin);
-        String localized = locales.get("hello");
+        Locales.initialize(plugin);
+        String localized = Locales.get("hello");
 
         Assertions.assertEquals("Hello World!", localized);
     }
@@ -31,8 +31,8 @@ public class UsageTests {
     @DisplayName("Getting a localized key (specify locale)")
     void getLocalizedKeyWithLocale() {
         Locales.saveDefaultConfig(plugin, "en_us.yml");
-        Locales locales = new Locales(plugin);
-        String localized = locales.get("en_us", "hello");
+        Locales.initialize(plugin);
+        String localized = Locales.get("en_us", "hello");
 
         Assertions.assertEquals("Hello World!", localized);
     }
@@ -41,8 +41,8 @@ public class UsageTests {
     @DisplayName("Getting a localized key with non-existent locale")
     void getLocalizedKeyWithNonExistentLocale() {
         Locales.saveDefaultConfig(plugin, "en_us.yml");
-        Locales locales = new Locales(plugin);
-        String localized = locales.get("fr_fr", "hello");
+        Locales.initialize(plugin);
+        String localized = Locales.get("fr_fr", "hello");
 
         Assertions.assertEquals("Hello World!", localized);
     }
@@ -51,8 +51,8 @@ public class UsageTests {
     @DisplayName("Getting a localized key with non-existent key")
     void getLocalizedKeyWithNonExistentKey() {
         Locales.saveDefaultConfig(plugin, "en_us.yml");
-        Locales locales = new Locales(plugin);
-        String localized = locales.get("inexistent_key");
+        Locales.initialize(plugin);
+        String localized = Locales.get("inexistent_key");
 
         Assertions.assertEquals("MISSING_PATH", localized);
     }
@@ -62,8 +62,8 @@ public class UsageTests {
     void getLocalizedKeyWithDifferentDefaultLocale() {
         Locales.saveDefaultConfig(plugin, "fr_fr.yml");
         Locales.saveDefaultConfig(plugin, "en_us.yml");
-        Locales locales = new Locales(plugin);
-        String localized = locales.get("fr_fr", "hello");
+        Locales.initialize(plugin);
+        String localized = Locales.get("fr_fr", "hello");
 
         Assertions.assertEquals("Bonjour le monde!", localized);
     }
@@ -73,8 +73,8 @@ public class UsageTests {
     void getLocalizedKeyWithLocaleThatHaveMirror() {
         Assertions.assertDoesNotThrow(() -> {
             Locales.saveDefaultConfig(plugin, "de_de.yml");
-            Locales locales = new Locales(plugin, "de_de");
-            Assertions.assertEquals(locales.get("de_de", "hello"), "Hallo Welt!");
+            Locales.initialize(plugin, "de_de");
+            Assertions.assertEquals(Locales.get("de_de", "hello"), "Hallo Welt!");
         });
     }
 
@@ -83,8 +83,8 @@ public class UsageTests {
     void getLocalizedKeyWithMirror() {
         Assertions.assertDoesNotThrow(() -> {
             Locales.saveDefaultConfig(plugin, "de_de.yml");
-            Locales locales = new Locales(plugin, "de_de");
-            Assertions.assertEquals(locales.get("de_at", "hello"), "Hallo Welt!");
+            Locales.initialize(plugin, "de_de");
+            Assertions.assertEquals(Locales.get("de_at", "hello"), "Hallo Welt!");
         });
     }
 
@@ -92,15 +92,15 @@ public class UsageTests {
     @DisplayName("Verify default_locale")
     void verifyDefaultLocale() {
         Locales.saveDefaultConfig(plugin, "en_us.yml");
-        Locales locales = new Locales(plugin);
-        Assertions.assertEquals(locales.getDefaultLocale(), "en_us");
+        Locales.initialize(plugin);
+        Assertions.assertEquals(Locales.getDefaultLocale(), "en_us");
     }
 
     @Test
     @DisplayName("Verify default_locale (differant than default)")
     void verifyDifferentDefaultLocale() {
         Locales.saveDefaultConfig(plugin, "fr_fr.yml");
-        Locales locales = new Locales(plugin, "fr_fr");
-        Assertions.assertEquals(locales.getDefaultLocale(), "fr_fr");
+        Locales.initialize(plugin, "fr_fr");
+        Assertions.assertEquals(Locales.getDefaultLocale(), "fr_fr");
     }
 }
