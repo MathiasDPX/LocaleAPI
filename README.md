@@ -1,6 +1,6 @@
 # LocaleAPI
 
-[<img src="https://mvn.mathiasd.fr/api/badge/latest/releases/gg/gyro/LocaleAPI?color=40c14a&name=Latest release&prefix=v">](https://mvn.mathiasd.fr/#/releases/gg/gyro/LocaleAPI/)
+<img src="https://mvn.mathiasd.fr/api/badge/latest/releases/gg/gyro/LocaleAPI?color=40c14a&name=Latest%20release&prefix=v">
 
 > [!NOTE]
 > For using the very last version: Use version `snapshot`
